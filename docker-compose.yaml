@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: aegiscarddb
+      MYSQL_USER: aegisuser
+      MYSQL_PASSWORD: aegispass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  aegiscard-app:
+    build: .
+    container_name: aegiscard-app
+    depends_on:
+      - mysql-db
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE=prod
+      SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/aegiscarddb
+      SPRING_DATASOURCE_USERNAME=aegisuser
+      SPRING_DATASOURCE_PASSWORD=aegispass
+
+volumes:
+  mysql_data:

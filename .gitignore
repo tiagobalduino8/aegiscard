@@ -1,0 +1,31 @@
+# Maven / Gradle build outputs
+target/
+build/
+out/
+
+# IDE settings
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# H2 database files (if persisted locally)
+*.h2.db
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Generated files
+*.class
+
+
