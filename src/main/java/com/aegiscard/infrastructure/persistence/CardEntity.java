@@ -9,13 +9,23 @@ import java.util.UUID;
 @Entity
 @Table(name = "cards")
 public class CardEntity {
-    @Id
-    private UUID id;
-    private String number;
+	@Id
+	private UUID id;
+	private String number;
 
-    public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
+	public UUID getId() {
+		return id;
+	}
 
-    public String getNumber() { return number; }
-    public void setNumber(String number) { this.number = number; }
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
 }

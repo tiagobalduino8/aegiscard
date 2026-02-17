@@ -8,23 +8,22 @@ import java.util.Optional;
 
 @Repository
 public class CardRepositoryImpl implements CardRepository {
-    private final CardJpaRepository jpa;
+	private final CardJpaRepository jpa;
 
-    public CardRepositoryImpl(CardJpaRepository jpa) {
-        this.jpa = jpa;
-    }
+	public CardRepositoryImpl(CardJpaRepository jpa) {
+		this.jpa = jpa;
+	}
 
-    @Override
-    public void save(Card card) {
-        CardEntity entity = new CardEntity();
-        entity.setId(card.getId());
-        entity.setNumber(card.getNumber());
-        jpa.save(entity);
-    }
+	@Override
+	public void save(Card card) {
+		CardEntity entity = new CardEntity();
+		entity.setId(card.getId());
+		entity.setNumber(card.getNumber());
+		jpa.save(entity);
+	}
 
-    @Override
-    public Optional<Card> findByNumber(String number) {
-        return jpa.findByNumber(number)
-                  .map(e -> new Card(e.getId(), e.getNumber()));
-    }
+	@Override
+	public Optional<Card> findByNumber(String number) {
+		return jpa.findByNumber(number).map(e -> new Card(e.getId(), e.getNumber()));
+	}
 }

@@ -11,24 +11,15 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    // chave do sistema (não é a senha do usuário)
-    private final Key secretKey = Keys.hmacShaKeyFor("ChaveSimplesComMaisDe32Caracteres123!".getBytes());
-    private final long expiration = 3600000; // 1h
+	private final Key secretKey = Keys.hmacShaKeyFor("ChaveSimplesComMaisDe32Caracteres123!".getBytes());
+	private final long expiration = 3600000; // 1h
 
-    public String generateToken(String username) {
-        return Jwts.builder()
-                .setSubject(username)
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(secretKey, SignatureAlgorithm.HS256)
-                .compact();
-    }
+	public String generateToken(String username) {
+		return Jwts.builder().setSubject(username).setExpiration(new Date(System.currentTimeMillis() + expiration))
+				.signWith(secretKey, SignatureAlgorithm.HS256).compact();
+	}
 
-    public String extractUsername(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-    }
+	public String extractUsername(String token) {
+		return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
+	}
 }

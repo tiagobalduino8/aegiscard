@@ -19,24 +19,24 @@ import com.aegiscard.interfaces.dto.LoginResponse;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    private final JwtUtil jwtUtil;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+	private final JwtUtil jwtUtil;
+	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
 
-    public AuthController(JwtUtil jwtUtil, UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.jwtUtil = jwtUtil;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+	public AuthController(JwtUtil jwtUtil, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+		this.jwtUtil = jwtUtil;
+		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
+	}
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        Optional<User> userOpt = userRepository.findByUsername(request.getUsername());
-        if (userOpt.isPresent() && passwordEncoder.matches(request.getPassword(), userOpt.get().getPassword())) {
-            String token = jwtUtil.generateToken(request.getUsername());
-            return ResponseEntity.ok(new LoginResponse(token));
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
+	@PostMapping("/login")
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+		Optional<User> userOpt = userRepository.findByUsername(request.getUsername());
+		if (userOpt.isPresent() && passwordEncoder.matches(request.getPassword(), userOpt.get().getPassword())) {
+			String token = jwtUtil.generateToken(request.getUsername());
+			return ResponseEntity.ok(new LoginResponse(token));
+		}
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
 
 }

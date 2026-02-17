@@ -1,3 +1,4 @@
 package com.aegiscard.application.query;
 
-public record FindCardQuery(String number) {}
+public record FindCardQuery(String number) {
+}

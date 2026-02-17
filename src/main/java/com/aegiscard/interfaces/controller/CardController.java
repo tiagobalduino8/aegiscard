@@ -28,41 +28,39 @@ import com.aegiscard.interfaces.dto.CardResponse;
 @RestController
 @RequestMapping("/cards")
 public class CardController {
-    private final InsertCardCommandHandler insertHandler;
-    private final FindCardQueryHandler findHandler;
+	private final InsertCardCommandHandler insertHandler;
+	private final FindCardQueryHandler findHandler;
 
-    public CardController(InsertCardCommandHandler insertHandler, FindCardQueryHandler findHandler) {
-        this.insertHandler = insertHandler;
-        this.findHandler = findHandler;
-    }
+	public CardController(InsertCardCommandHandler insertHandler, FindCardQueryHandler findHandler) {
+		this.insertHandler = insertHandler;
+		this.findHandler = findHandler;
+	}
 
-    @PostMapping
-    public ResponseEntity<CardResponse> insert(@RequestBody CardRequest request) {
-        UUID id = insertHandler.handle(new InsertCardCommand(request.number()));
-        return ResponseEntity.ok(new CardResponse(id));
-    }
+	@PostMapping
+	public ResponseEntity<CardResponse> insert(@RequestBody CardRequest request) {
+		UUID id = insertHandler.handle(new InsertCardCommand(request.number()));
+		return ResponseEntity.ok(new CardResponse(id));
+	}
 
-    @GetMapping("/{number}")
-    public ResponseEntity<CardResponse> find(@PathVariable("number") String number) {
-        Optional<UUID> id = findHandler.handle(new FindCardQuery(number));
-        return id.map(uuid -> ResponseEntity.ok(new CardResponse(uuid)))
-                 .orElse(ResponseEntity.notFound().build());
-    }
+	@GetMapping("/{number}")
+	public ResponseEntity<CardResponse> find(@PathVariable("number") String number) {
+		Optional<UUID> id = findHandler.handle(new FindCardQuery(number));
+		return id.map(uuid -> ResponseEntity.ok(new CardResponse(uuid))).orElse(ResponseEntity.notFound().build());
+	}
 
-    
-    @PostMapping("/upload")
-    public ResponseEntity<List<CardResponse>> upload(@RequestParam("file") MultipartFile file) {
-        List<CardResponse> responses = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                UUID id = insertHandler.handle(new InsertCardCommand(line.trim()));
-                responses.add(new CardResponse(id));
-            }
-        } catch (IOException e) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(responses);
-    }
+	@PostMapping("/upload")
+	public ResponseEntity<List<CardResponse>> upload(@RequestParam("file") MultipartFile file) {
+		List<CardResponse> responses = new ArrayList<>();
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				UUID id = insertHandler.handle(new InsertCardCommand(line.trim()));
+				responses.add(new CardResponse(id));
+			}
+		} catch (IOException e) {
+			return ResponseEntity.badRequest().build();
+		}
+		return ResponseEntity.ok(responses);
+	}
 
 }

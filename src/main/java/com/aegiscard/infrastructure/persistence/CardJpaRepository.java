@@ -6,6 +6,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CardJpaRepository extends JpaRepository<CardEntity, UUID> {
-    Optional<CardEntity> findByNumber(String number);
+	Optional<CardEntity> findByNumber(String number);
 }
-
