@@ -18,9 +18,9 @@ It uses **JWT authentication**, encrypts card numbers with **AES**, and stores u
    cd aegiscard
    git checkout develop
 
-./mvnw clean package
+mvn clean package
 
-./mvnw spring-boot:run
+mvn spring-boot:run
 
 java -jar target/card-api.jar
 
@@ -33,7 +33,7 @@ java -jar target/card-api.jar
 ### Steps
 Build the JAR:
 
-./mvnw clean package
+mvn clean package
 
 #### Build and start containers:
 docker-compose up --build
