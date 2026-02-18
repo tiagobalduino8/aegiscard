@@ -1,11 +1,6 @@
-# AegisCard API
 
-**AegisCard API** is a secure card registration and lookup system built with **Java Spring Boot**, following **Clean Architecture** and **CQRS** principles.  
-It uses **JWT authentication**, encrypts card numbers with **AES**, and stores user passwords with **BCrypt**. The system also leverages **Virtual Threads (Java 21)** for efficient concurrency.
 
----
-
-## 🚀 Running Locally (Develop Branch)
+## Running Locally (Develop Branch)
 
 ### Prerequisites
 - Java 21+
@@ -25,7 +20,7 @@ mvn spring-boot:run
 java -jar target/card-api.jar
 
 
-## 🐳 Running in Production with Docker
+## Running in Production with Docker
 ### Prerequisites
 - Docker
 - Docker Compose
